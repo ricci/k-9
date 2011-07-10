@@ -1324,6 +1324,10 @@ public class MessageList
             onSearchRequested();
             return true;
         }
+        case KeyEvent.KEYCODE_GRAVE: {
+            onSearchUnread();
+            return true;
+        }
         case KeyEvent.KEYCODE_H: {
             showToast(getString(R.string.message_list_help_key), Toast.LENGTH_LONG);
             return true;
@@ -1985,6 +1989,50 @@ public class MessageList
             Log.e(K9.LOG_TAG, "Could not set flag on local message", me);
         }
         mHandler.sortMessages();
+    }
+
+    private void onSearchUnread() {
+        if (mAccount == null || mFolderName == null) {
+            return;
+        }
+
+        String description = getString(R.string.search_title, mAccount.getDescription(), getString(R.string.unread_modifier));
+        final Flag[] flags = new Flag[] { Flag.SEEN };
+        final String[] folders = new String[] { mFolderName };
+
+        SearchSpecification searchSpec = new SearchSpecification() {
+            //interface has no override            @Override
+            public String[] getAccountUuids() {
+                return new String[] { mAccount.getUuid() };
+            }
+
+            //interface has no override            @Override
+            public Flag[] getForbiddenFlags() {
+                return flags;
+            }
+
+            //interface has no override            @Override
+            public String getQuery() {
+                return "";
+            }
+
+            @Override
+            public Flag[] getRequiredFlags() {
+                return null;
+            }
+
+            @Override
+            public boolean isIntegrate() {
+                return false;
+            }
+
+            @Override
+            public String[] getFolderNames() {
+                return folders;
+            }
+
+        };
+        MessageList.actionHandle(context, description, searchSpec);
     }
 
     private void checkMail(Account account, String folderName) {
