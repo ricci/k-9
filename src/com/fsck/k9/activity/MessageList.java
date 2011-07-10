@@ -1388,11 +1388,13 @@ public class MessageList
                         setFlag(selection, Flag.SEEN, !message.read);
                         return true;
                     }
+                    case KeyEvent.KEYCODE_DPAD_DOWN:
                     case KeyEvent.KEYCODE_J:
                     case KeyEvent.KEYCODE_P: {
                         gotoPreviousItem();
                         return true;
                     }
+                    case KeyEvent.KEYCODE_DPAD_UP:
                     case KeyEvent.KEYCODE_N:
                     case KeyEvent.KEYCODE_K: {
                         gotoNextItem();
