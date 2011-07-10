@@ -47,4 +47,14 @@
             android:layout_height="60dip"
             android:layout_weight="1"
            />
+
+        <ImageButton
+            android:id="@+id/marknew"
+            android:layout_width="fill_parent"
+            android:src="@drawable/ic_button_mark_unread"
+            android:background="@drawable/message_buttonbar_button_background"
+            android:textSize="0dip"
+            android:layout_height="60dip"
+            android:layout_weight="1"
+           />
     </LinearLayout>

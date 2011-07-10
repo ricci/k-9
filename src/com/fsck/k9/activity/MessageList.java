@@ -3195,6 +3195,11 @@ public class MessageList
                 onMove(getSelectionFromMessage(mCurrentMessageInfo));
             }
             return;
+        case R.id.marknew:
+            if (mCurrentMessageInfo != null) {
+                onToggleRead(mCurrentMessageInfo);
+            }
+            return;
         case R.id.next:
             gotoNextItem();
             return;
@@ -3560,6 +3565,7 @@ public class MessageList
         setOnClickListener(R.id.previous);
         setOnClickListener(R.id.move);
         setOnClickListener(R.id.delete);
+        setOnClickListener(R.id.marknew);
         setOnClickListener(R.id.spam);
         // To show full header
         setOnClickListener(R.id.header_container);
