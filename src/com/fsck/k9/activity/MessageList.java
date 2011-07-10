@@ -332,6 +332,11 @@ public class MessageList
 
     private MessageListHandler mHandler = new MessageListHandler();
 
+    /*
+     * If set, go to this folder when the back button is pressed
+     */
+    private String mGotoFolderOnBack;
+
     private SORT_TYPE sortType = SORT_TYPE.SORT_DATE;
 
     private boolean sortAscending = true;
@@ -1258,7 +1263,10 @@ public class MessageList
                 saveListViewSize();
             }
             if (K9.manageBack()) {
-                if (mQueryString == null) {
+                if (mGotoFolderOnBack != null) {
+                    actionHandleFolder(this,mAccount,mGotoFolderOnBack);
+                    mGotoFolderOnBack = null;
+                } else if (mQueryString == null) {
                     onShowFolderList();
                 } else {
                     onAccounts();
@@ -1329,8 +1337,11 @@ public class MessageList
             return true;
         }
         case KeyEvent.KEYCODE_GRAVE: {
-            onSearchUnread();
-            return true;
+            if (mFolderName != null) {
+                mGotoFolderOnBack = mFolderName;
+                onSearchUnread();
+                return true;
+            }
         }
         case KeyEvent.KEYCODE_H: {
             showToast(getString(R.string.message_list_help_key), Toast.LENGTH_LONG);
